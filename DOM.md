@@ -1,6 +1,6 @@
 ## 对DOM的理解
 1. DOM通过构造函数（Document、Element、Text）将HTML文档变成对象展现到内存中。
-2. DOM的D指的是Document（可认为是HTML文档）；O指的是Object，他是在内存中按照树型结构，通过构造函数，构造出对象展现在内存里；M指的是Model，因为在内存中HTML结构不好表示，所以用一个模型（树型结构）来表示。
+2. DOM的D指的是Document（可认为是HTML文档）；O指的是Object，他是在内存中按照树型结构，通过构造函数，构造出对象展现在内存里；M指的是Model，因为在内存中HTML结构不好表示，所以用一个模型（树型结构）来表示。
 3. JavaScript将HTMl文档渲染成了DOM的树型结构。
 4. 有了树型结构，如何获取节点？
 
@@ -25,8 +25,7 @@
 
    ii. 通过Node方法将创建的节点拼接到DOM中（mdn文档）
 
-
-     Node.appendChild();Node.cloneNode();Node.isSameNode()等
+    Node.appendChild();Node.cloneNode();Node.isSameNode()等
 7. DOM的API无外乎增删改查。
   
    增:Node.setAttribute("属性名", "属性值")
@@ -74,25 +73,25 @@
 
     Node.parentNode
 ### Node方法
-  Node.appendChild()
+   Node.appendChild()
 
-  Node.hasChildNodes()
+   Node.hasChildNodes()
 
-  Node.cloneNode()
+   Node.cloneNode()
 
-  Node.insertBefore()
+   Node.insertBefore()
 
-  Node.removeChild()
+   Node.removeChild()
 
-  Node.replaceChild()
+   Node.replaceChild()
 
-  Node.contains()
+   Node.contains()
 
-  Node.isEqualNode()
+   Node.isEqualNode()
 
-  Node.isSameNode()
+   Node.isSameNode()
 
-  Node.normalize()
+   Node.normalize()
 ***
 ##  需特殊记忆的几个点（node接口）
 1. nextSibling和prevSibling可能会获取到文本
