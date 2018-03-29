@@ -47,40 +47,35 @@
     $div.setContext('hi')       //为所有div设置文本内容为hi
 5. 整段代码如下：
 
-        window.jQuery = function(nodeOrSelector){
-          let nodes = {}
-          if (typeof nodeOrSelector === 'string'){
-              nodes = document.querySelectorAl(nodeOrSelector)    
-          } else if (typeof nodeOrSelector instanceof Node){
-              nodes = {nodeOrSelector} 
-            }    
-          }
+```js
+var jQuery = function (nodeOrSelector) {
+  var nodes = {};
+  if (typeof nodeOrSelector === 'string') {
+    nodes = document.querySelectorAl(nodeOrSelector);
+  } else if (typeof nodeOrSelector instanceof Node) {
+    nodes = {
+      nodeOrSelector,
+    };
+  }
+  let allDiv = document.querySelectorAll(nodes);
+  return {
+    addClass: function (value) {
+      for (let i = 0; i < allDiv.length; i++) {
+        allDiv[i].classList.add(value);
+      }
+    },
+    setContext: function (text) {
+      for (let i = 0; i < allDiv.length; i++) {
+        allDiv[i].textContent = text;
+      }
+    },
+  };
+};
 
-          let alldiv = document.querySelectorAll(selector)       
-          return{
-              addClass:function (value) {
-                  for(let i = 0; i < allDiv.length; i++) {
-                      alldiv[i].classList.add(value)
-                  }
-              }    
-              setContext:function (text) {
-                  for(let i = 0; i < allDiv.length; i++) {
-                      alldiv[i].textContent = "text"
-                  }
-              }
-          }    
-          return nodes
-        } 
-        window.$ = jQuery
+var $ = window.$ = jQuery;
 
-        var $div = $('div')         
+var $div = $('div');
 
-       $div.addClass('red')     
-       $div.setContext('hi')  
-
-
-
-
-
-
-
+$div.addClass('red');
+$div.setContext('hi');
+```
