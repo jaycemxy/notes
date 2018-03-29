@@ -1,16 +1,19 @@
-## 需求：实现一个简易版的jQuery，有两个API接口
-1.  addClass():可将所有div添加一个名为red的class
-  
-2.  setText():可将所有div的textContent变为hi
+# 需求：实现一个简易版的jQuery，有两个API接口
 
-## 思路：
-    
+1. addClass():可将所有div添加一个名为red的class
+
+2. setText():可将所有div的textContent变为hi
+
+# 思路：
+
 构造出一个新的函数，这个函数接受一个参数（参数可以是节点或选择器）随后返回一个方法对象，该对象包含addClass和setText两个API接口。在此之上，便可以使用$div调用addClass和setText两个属性去操作这个节点或选择器。
 
-## 实现步骤：
+# 实现步骤：
+
 1. 首先在window中添加一个全局属性jQuery：
 
     window.jQuery = function() {}
+
 2. 获取元素并判断元素类型
 
     window.jQuery = function(nodeOrSelector){
@@ -21,6 +24,7 @@
             nodes = {nodeOrSelector}       //若参数是node节点，那么就直接返回nodeOrSelector里的内容
         }
     }
+
 3. 设置一个名叫addClass和一个名叫setContext的API
 
     let alldiv = document.querySelectorAll(selector)       //伪数组
@@ -45,6 +49,7 @@
     $div.addClass('red')        //为所有div添加名为red的class 
 
     $div.setContext('hi')       //为所有div设置文本内容为hi
+
 5. 整段代码如下：
 
 ```js
