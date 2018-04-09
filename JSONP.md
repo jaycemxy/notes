@@ -82,3 +82,11 @@ $.ajax({
  })
 
  $.jsonp()
+```
+## JSON与JSONP
+
+  1. JSON是一种轻量级的数据交换格式，JSONP是一种跨域数据交互协议。
+
+  2. JSON全名叫做json with padding，是理想的数据交换格式，但没办法跨域直接获取，于是就将json包裹(padding)在一个合法的js语句中作为js文件传过去。这就是json和jsonp的区别。
+
+  3. 如果说json是想得到的结果，那么jsonp就是获得这个结果采用的一种方法，当然最终获得和处理的还是json。所以说json是目的，jsonp只是手段。并且jsonp只有在跨域获取数据时才会用到。
