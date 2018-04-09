@@ -7,6 +7,7 @@ JSONP就是一个动态标签跨域请求，简单来说就是script标签+callb
 
 1. 请求方创建 script，src 指向响应方，同时传一个查询参数 ?callbackName=yyy
 2. 响应方根据查询参数callbackName，构造形如
+    
     i.yyy.call(undefined, '你要的数据')
     
     ii.yyy('你要的数据')
@@ -30,24 +31,24 @@ JSONP就是一个动态标签跨域请求，简单来说就是script标签+callb
 因为JSONP是通过动态创建script实现的（script中的src属性只能写入url，而url可以写入get数据无法写入post），而动态创建script只能用GET不能用POST。
 
 ## 一个完整的JSONP形式
-    ```
     button.addEventListener('click', (e)=>{
-    let script = document.createElement('script')
-    let functionName = 'frank'+ parseInt(Math.random()*10000000 ,10)
-    window[functionName] = function(){  // 每次请求之前搞出一个随机的函数
-        amount.innerText = amount.innerText - 0 - 1
-    }
-    script.src = '/pay?callback=' + functionName
-    document.body.appendChild(script)
-    script.onload = function(e){ // 状态码是 200~299 则表示成功
-        e.currentTarget.remove()
-        delete window[functionName] // 请求完了就干掉这个随机函数
-    }
-    script.onload = function(e){ // 状态码大于等于 400 则表示失败
-        e.currentTarget.remove()
-        delete window[functionName] // 请求完了就干掉这个随机函数
-    }
+      let script = document.createElement('script')
+      let functionName = 'frank'+ parseInt(Math.random()*10000000 ,10)
+      window[functionName] = function(){  // 每次请求之前搞出一个随机的函数
+          amount.innerText = amount.innerText - 0 - 1
+      }
+      script.src = '/pay?callback=' + functionName
+      document.body.appendChild(script)
+      script.onload = function(e){ // 状态码是 200~299 则表示成功
+          e.currentTarget.remove()
+          delete window[functionName] // 请求完了就干掉这个随机函数
+      }
+      script.onload = function(e){ // 状态码大于等于 400 则表示失败
+          e.currentTarget.remove()
+          delete window[functionName] // 请求完了就干掉这个随机函数
+      }
     }) 
+    
     //后端代码
     ...
     if (path === '/pay'){
@@ -67,6 +68,8 @@ JSONP就是一个动态标签跨域请求，简单来说就是script标签+callb
 
 1. callbackName -> callback
 2. yyy -> 随机数 frank12312312312321325()
+
+    //函数名通常是一个随机数，并且在用完之后会立即删掉
 ```
 $.ajax({
  url: "http://jack.com:8002/pay",
