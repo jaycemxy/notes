@@ -55,13 +55,16 @@ function Soldier(){
     this.name = '无名战士'
 }
 
-Soldier.prototype.兵种 = "美国大兵"
-Soldier.prototype.攻击力 = 5
-Soldier.prototype.行走 = function(){ /*走两步的代码*/ }
-Soldier.prototype.奔跑 = function(){ /*狂奔的代码*/ }
-Soldier.prototype.死亡 = function(){ /*Go die*/ }
-Soldier.prototype.攻击 = function(){ /*糊他熊脸*/ }
-Soldier.prototype.防御 = function(){ /*护脸*/}
+Soldier.prototype = {
+	constructor:Soldier,
+	兵种:"美国大兵",
+	攻击力:5,
+	行走:function(){ /*走两步的代码*/ },
+	奔跑:function(){ /*狂奔的代码*/ },
+	死亡:function(){ /*Go die*/ },
+	攻击:function(){ /*糊他熊脸*/ },
+	防御:function(){ /*护脸*/}
+}
 
 var soldier = []
 for(var i=0;i<100;i++){
