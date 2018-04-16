@@ -8,14 +8,15 @@ ii.生成对象的时候，必须使用new命令。
 new是为了批量操作对象而出现的
 
 当你使用new关键字，new命令会自动帮你执行以下步骤：
-1. 创建一个空对象，作为将要返回的对象实例。
-2. 将这个空对象的原型，指向构造函数的prototype属性。
-3. 将这个空对象赋值给函数内部的this关键字。
-4. 开始执行构造函数内部的代码。
+1. 创建一个空的临时对象，作为将要返回的对象实例。  //var temp = {}
+2. 将这个空对象的原型，指向构造函数的prototype属性。  //this.__proto__ = 构造函数fn.prototype 
+3. 将这个空对象赋值给函数内部的this关键字。  //this = temp
+4. 开始执行构造函数内部的代码。  //return this
 ## JS之父的关怀（构造函数+new）
 注释的三行代码是加上new之后可以省去的代码
 
 ```
+// 自有属性
 function createSoldier(){
     //this = {} 让this是一个空对象
     //this.__proto__ = createSoldier.prototype
@@ -25,6 +26,7 @@ function createSoldier(){
     //return this
 }
 
+//公有属性
 //createSoldider.prototype = {constructor:createSolider}
 createSoldier.prototype.兵种 = "美国大兵"
 createSoldier.prototype.攻击力 = 5
