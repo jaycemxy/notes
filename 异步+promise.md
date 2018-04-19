@@ -46,7 +46,13 @@ console.log('请求完毕')
 ```
 ### 异步的形式(通常使用回调拿到异步结果)
 ## 回调的形式（promise的then形式）
-promise是一种回调形式，好处是不需要想参数，固定了参数名为then
+1. promise是一种回调形式，好处是不需要想参数，固定了参数名为then
+2. Promise也是一个事务管理器。他的作用是将各种内嵌回调的事务用流水形式表达，其目的是为了简化编程，让代码逻辑更加清晰。
+3. promise有两个重要方法：
+
+then，将事务添加到事务队列（allAffairs）中
+
+resolve，开启流程，让整个操作从第一个事务开始执行
 ```
 $ajax({
     url:'/xxx',
@@ -106,6 +112,22 @@ async functon fn(){
 var r = await fn()
 console.log(r)
 ```
+## try...catch捕获报错信息
+```
+function buyFruit(){
+    return new Promise((resolve,reject)=>{
+        setTimeOut(()=>{
+            reject.call()
+        },10000)
+    })
+}
 
+try{
+    var result = await buyFruit()
+    console.log('没错')
+}catch(ex){
+    console.log('异常了')
+}   //异常了
+```
 
 
