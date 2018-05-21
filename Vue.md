@@ -49,3 +49,15 @@ Vue.component('child',{  //创建一个名为child的组件
 })
 ```
 ![alt text](./img/父子组件通信.jpg)
+## Vue的11个生命周期钩子
+beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、activated、deactivated、beforeDestroy、destroyed、errorCaptured
+## Vuex的作用
+使用Vuex解决了一下两个问题
+- 组件之间的数据通信
+- 使用单向数据流的方式进行数据的中心化管理（所谓的单向数据流，就是当用户进行操作的时候，会从组件发出一个 action，这个 action 流到 store 里面，触发 store 对状态进行改动，然后 store 又触发组件基于新的状态重新渲染）
+
+我们不好说为什么使用Vuex，但是如果在下面这种情况下不使用Vuex，将会带来很多弊端：
+
+假设在一个app里有四个tab，每个tab都需要获取用户的资料，如果数据在每个tab组件里都保存了一份，那么用户在手动更新了资料后，这四个tab都需要更新一遍用户资料来保证用户在每个地方看到的数据永远都是最新的。如果说每进一次tab都重新请求一下：
+
+对于服务器来说，频繁请求数据会耗用很多资源，如果该app的用户数量足够多，那么每多出来的一次请求，对于公司来说都是一笔巨大的开支，但是如果数据都储存在store中，并且这四个tab读取的都是同一份数据，那么在用户更新了资料时，只需要更新store中的数据，这样在进这四个不同的tab时，就减少了四次请求
