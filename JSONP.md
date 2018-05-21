@@ -8,9 +8,9 @@ JSONP就是一个动态标签跨域请求，简单来说就是script标签+callb
 1. 请求方创建 script，src 指向响应方，同时传一个查询参数 ?callbackName=yyy
 2. 响应方根据查询参数callbackName，构造形如
     
-    i.yyy.call(undefined, '你要的数据')
+    i. yyy.call(undefined, '你要的数据')
     
-    ii.yyy('你要的数据')
+    ii. yyy('你要的数据')
     
     这样的响应
 3. 浏览器接收到响应，就会执行 yyy.call(undefined, '你要的数据')
@@ -28,7 +28,7 @@ JSONP就是一个动态标签跨域请求，简单来说就是script标签+callb
 3. 用script标签构造GET请求（在如何让后端知道我要执行什么代码方面加入了一个callback的参数）
     
 ## JSONP为什么不支持POST
-因为JSONP是通过动态创建script实现的（script中的src属性只能写入url，而url可以写入get数据无法写入post），而动态创建script只能用GET不能用POST。
+因为JSONP是通过动态创建script标签实现的（script中的src属性只能写入url，而url可以写入get数据无法写入post），而动态创建script只能用GET不能用POST。
 
 ## 一个完整的JSONP形式
     button.addEventListener('click', (e)=>{
