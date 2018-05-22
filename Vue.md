@@ -24,6 +24,8 @@ new Vue({ el: '#components-demo' })
 除了el这样根实例特有的选项，组件可以接收与new Vue相同的选项，例如：data、computed、watch、methods
 ## 父子组件通信
 父组件通过 prop（down） 给子组件向下传递数据(包括属性和方法)，子组件通过 $emit（up） 触发事件向上给父组件发送消息（传递父组件需要的参数），即 prop 是向下传递，$emit 事件向上传递。
+下面是一个儿子向上给爸爸发送消息的例子：
+
 html:
 ```
 <div id="demo">
@@ -31,6 +33,7 @@ html:
     <child v-show=visible @close="visible=false"></child>
 <div>
 ```
+
 JS:
 ```
 new Vue({  //首先创建一个vue的实例
@@ -49,6 +52,33 @@ Vue.component('child',{  //创建一个名为child的组件
 })
 ```
 ![alt text](./img/父子组件通信.jpg)
+## 非父子组件通信（使用一个new Vue作为中央事件总线）
+1. 在两个组件都能访问到的作用域创建var bus = new Vue()
+2. 触发组件A中的事件bus.$emit('xxx')
+3. 在组件B创建的钩子中监听事件bus.$on('xxx',xxx-data => { //处理 })
+实例：假设有三个组件main.vue、click.vue和show.vue，click和show是main组件下的兄弟组件，click通过v-for在父组件中遍历在多个列表项里，需要实现在click组件中触发点击事件，在show组件中将被点击的dom元素展示出来
+```
+<!-- 首先给click组件添加点击事件 -->
+<div class="click" @click="doClick($event)"></div>
+
+<!-- 想要在doClick()方法中实现与show组件的通信，需要新建一个js文件来创建我们需要的eventBus，那么就先命名为bus.js -->
+var bus = new Vue()
+
+<!-- 然后需要在doClick方法中来触发一个事件，这样我们每次在click组件中点击，就会在bus中触发这个名为getTarget的事件，并且将event.target顺着事件传递出去 -->
+methods: {
+  addCart(event) {
+    bus.$emit('getTarget', event.target);
+  }
+}
+
+<!-- 接着在show组件的created()钩子中调用bus来监听这个事件 -->
+created() {
+  bus.$on('getTarget', target => {
+    console.log(target);
+  })
+}
+<!-- 这样每次在click组件中触发点击事件，就会把event.target传到show组件中并log出来 -->
+```
 ## Vue的11个生命周期钩子
 beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、activated、deactivated、beforeDestroy、destroyed、errorCaptured
 ## Vuex的作用
@@ -70,4 +100,46 @@ beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、activa
 
     i. hash模式  利用URL中的hash（“#”）
     ii. history模式  利用 history.pushState API 来完成 URL 跳转而无须重新加载页面
+- 实现步骤
+1. 在首页中添加两个script标签导入vue和vue-router
+html:
+```
+<script src="js/vue.js"></script>
+<script src="js/vue-router.js"></script>
 
+<div id="app">
+  <div>
+    <!-- 用 router-link 组件来导航、传入 to 属性来指定链接、<router-link> 默认会被渲染成一个 a 标签 -->
+    <router-link to="/">Go to home</router-link>
+    <router-link to="/topic">Go to topic</router-link>
+    <router-link to="/content">Go to content</router-link>
+  </div>
+
+  <!-- 路由出口，路由匹配到的组件将在这里被渲染出来 -->
+  <router-view></router-view>
+</div>
+```
+2. 定义vue组件
+```
+const home = { template: '<div>this is home page</div>' }
+const topic = { template: '<div>this is topic page</div>' }
+const content = { template: '<div>this is content page</div>' }
+```
+3. 定义路由
+```
+const routes = [ 
+  { path:'/', component: home},
+  { path:'/topic', component: topic},
+  { path:'/content', component: content},
+]
+```
+4. 创建router实例，并将定义的路由传入
+const router = new VueRouter({
+  routes: routes
+})
+5. 创建和挂载根实例
+```
+const app = new Vue({
+  router: router
+}).$mount('#app')
+```
