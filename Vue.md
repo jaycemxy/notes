@@ -19,7 +19,9 @@ html:
 </div>
 
 JS:
-new Vue({ el: '#components-demo' })
+var vm = new Vue({
+  el: '#components-demo' 
+})
 ```
 除了el这样根实例特有的选项，组件可以接收与new Vue相同的选项，例如：data、computed、watch、methods
 ## 父子组件通信
@@ -36,7 +38,7 @@ html:
 
 JS:
 ```
-new Vue({  //首先创建一个vue的实例
+var vm = new Vue({  //首先创建一个vue的实例
   el: '#demo',
   data: {
     visible: false  //默认是看不见儿子的
@@ -86,7 +88,7 @@ beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、activa
 
 使用Vuex解决了一下两个问题
 - 组件之间的数据通信
-- 使用单向数据流的方式进行数据的中心化管理（所谓的单向数据流，就是当用户进行操作的时候，会从组件发出一个 action，这个 action 流到 store 里面，触发 store 对状态进行改动，然后 store 又触发组件基于新的状态重新渲染）
+- 使用单向数据流的方式进行数据的中心化管理（所谓的单向数据流，就是当用户进行操作的时候，会从组件发出一个 action，这个 action 流到 store 里面，触发 store 对状态进行改动，然后 store 又触发组件基于新的状态重新渲染）对于复杂的应用来说，Vuex实施统一管理，方便维护和跟踪
 
 我们不好说为什么使用Vuex，但是如果在下面这种情况下不使用Vuex，将会带来很多弊端：
 
@@ -143,3 +145,52 @@ const app = new Vue({
   router: router
 }).$mount('#app')
 ```
+## Vue双向绑定如何实现？缺点是？
+假如我们要实现一个用户在输入框输入内容，页面上会自动更新的效果
+```
+html:
+<div id="app">
+  <p>{{ message }}</p>
+  <input v-model="message"></input>
+</div>
+
+JS:
+var vm = new Vue({
+  el:'app',
+  data: {
+    message:'Hello,this is Jayce!'
+  }
+})
+```
+优缺点：双向绑定给人最大的优越感就是方便，当data发生变化时，页面也会自动更新，但这也伴随着一个缺点，我们无从知道data是什么时候变的，是谁变的，变化后也没有人来通知你，虽然说watch可以用来监听data的变化，但这样岂不是变得更复杂，不如用单向数据绑定，Vuex的单向数据绑定就满足了这种控制欲，虽然牺牲了一部分便捷性，但是换来的却是更强的控制力。
+## computed计算属性的用法？与methods的区别？
+对于复杂的逻辑，我们应该用到计算属性，例如我们想多次引用一个翻转字符：
+```
+html:
+<div id="demo">
+  <p>Original message: "{{ message }}"</p>
+  <p>Reversed message: "{{ reversedMessage }}"</p>  
+</div>
+
+JS:
+var vm = new Vue({
+  el: 'demo',
+  data: {
+    message: 'Hello'
+  },
+  computed: {
+    reversedMessage: function(){
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+```
+输出结果：
+
+Original message: "Hello"
+Reversed message: "olleH"
+
+- 与methods的区别：
+i. 可以将同一个函数定义为一个methods方法而不是一个计算属性，两种方式的最终结果是一致的，但唯一不同的是计算属性是基于它们的依赖进行缓存的，也就是说只有在他的相关依赖发生改变时才会重新求值，而调用方法总是会在触发重新渲染时再次执行函数
+
+ii. 当有一个性能开销巨大的项目时，它需要计算属性A，它需要遍历一个巨大的数组并且进行大量的运算，也有可能一些其他的计算属性依赖于属性A，假如没有缓存，每次调用属性都会重新对A进行一次计算，如果不希望有这些缓存，那么就可以用methods来代替
