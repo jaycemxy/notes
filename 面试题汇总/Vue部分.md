@@ -82,6 +82,8 @@ created() {
 <!-- 这样每次在click组件中触发点击事件，就会把event.target传到show组件中并log出来 -->
 ```
 ## Vue的11个生命周期钩子
+生命周期函数是Vue实例在某个时间点会自动执行的函数
+
 beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、activated、deactivated、beforeDestroy、destroyed、errorCaptured
 ## Vuex的作用
 官方定义：专门为Vue.js应用程序开发的状态管理模式。它采用集中式存储管理应用的所有组件的状态，并以相应的规则保证状态以一种可预测的方式发生变化。
