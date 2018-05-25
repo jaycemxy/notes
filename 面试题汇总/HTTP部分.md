@@ -24,12 +24,12 @@
 6. 如何跨域？（JSONP、CORS以及postMessage）
 - JSONP
 
-网页通过添加一个script元素，向服务器请求JSON数据，这种做法不受同源政策限制；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来。简单来说就是script标签加一个callback的回调函数
+网页通过添加一个script元素，向服务器请求JSON数据，这种做法不受同源政策限制；服务器收到请求后，将数据放在一个指定名字的回调函数里传回来。简单来说就是动态添加一个script标签和一个callback的回调函数
 - CORS
 
 CORS是跨源资源分享（Cross-Origin Resource Sharing）的缩写，它是跨源AJAX请求的根本解决方法。相比JSONP只能发GET请求，CORS允许任何类型的请求。
 
-简单来说就是服务端在响应头中添加一个Access-Control-Allow-Origin 的头部，头部的值为客户端的域名，eg：
+简单来说就是服务端在响应头中添加一个 Access-Control-Allow-Origin 的头部，头部的值为客户端的域名，eg：
 ```
   response.setHeader('Access-Control-Allow-Origin','http://jayce.com:8003')
 ```

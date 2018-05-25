@@ -4,47 +4,33 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <script src="//cdn.bootcss.com/vue/2.5.16/vue.js"></script>
-    <script src="//cdn.bootcss.com/vue/2.5.16/vue.min.js"></script>
+    <style>
+        .parent {
+            position: relative;
+            border: 1px solid red;
+            height: 200px;
+        }
+
+        .child {
+            position: absolute;
+            border: 1px solid green;
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="root">
-        <child content='Jayce'></child>
-        <child content='Ma'></child>
+    <div class="parent">
+        <div class="child">
+            这里是一些内容
+        </div>
     </div>
-
-    <script>
-        Vue.prototype.bus = new Vue()
-
-        Vue.component('child', {
-            props: {
-                content: String
-            },
-            data: function () {
-                return {
-                    selfContent: this.content
-                }
-            },
-            template: '<div @click="handleClick">{{ selfContent }}</div>',
-            methods: {
-                handleClick: function () {
-                    this.bus.$emit('change', this.selfContent)
-                }
-            },
-            mounted: function () {
-                var this_ = this
-                this.bus.$on('change', function (msg) {
-                    this_.selfContent = msg
-                })
-            }
-        })
-
-        var vm = new Vue({
-            el: '#root'
-        })
-    </script>
-
 </body>
 
 </html>

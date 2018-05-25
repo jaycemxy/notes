@@ -7,14 +7,14 @@
 2. CSS reset和normalize CSS的区别
  
    - reset是重置，抛弃了默认样式，之前的样式我都不要
-   - normalize让浏览器的标签都跟标准规定的默认样式一致，各浏览器上的标签默认样式基本统一
+   - normalize（标准化）让浏览器的标签都跟标准规定的默认样式一致，各浏览器上的标签默认样式基本统一
 3. 如何居中
 
   - 水平居中
 
     内联元素：爸爸身上写text-align:center;
   
-    块级元素：margin-right: auto; margin-left: auto;
+    块级元素：设置宽度  +  margin: 0 auto;
   - 垂直居中(demo详见demos文件)
     
     a、table自带功能
