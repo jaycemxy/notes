@@ -10,44 +10,41 @@
 
 <body>
     <div id="root">
-        <counter :count="2" @inc="handleIncrease"></counter>
-        <counter :count="3" @inc="handleIncrease"></counter>
-        <div>{{ total }}</div>
+        <child content='Jayce'></child>
+        <child content='Ma'></child>
     </div>
 
-
     <script>
-        var counter = {
-            props: ['count'], //接收父组件中的数据
+        Vue.prototype.bus = new Vue()
+
+        Vue.component('child', {
+            props: {
+                content: String
+            },
             data: function () {
                 return {
-                    number: this.count //子组件不能随意更改父组件中的数据，只能通过克隆一个副本再在子组件内部进行修改，这里克隆了父组件中的count数据，子组件通过操作number就能更改父组件中的数据
+                    selfContent: this.content
                 }
             },
-            template: '<div @click="handleClick">{{ number }}</div>',
+            template: '<div @click="handleClick">{{ selfContent }}</div>',
             methods: {
                 handleClick: function () {
-                    this.number = this.number + 2;
-                    this.$emit('inc', 2)  //这里的第二个参数是每点击一次加多少值
+                    this.bus.$emit('change', this.selfContent)
                 }
+            },
+            mounted: function () {
+                var this_ = this
+                this.bus.$on('change', function (msg) {
+                    this_.selfContent = msg
+                })
             }
-        }
+        })
 
         var vm = new Vue({
-                el: '#root',
-                data: {
-                    total: 5
-                },
-                components: {
-                    counter: counter
-                },
-                methods: {
-                    handleIncrease: function (step) {  //这里的step是$emit里传过来的第二个参数
-                        this.total += step
-                    }
-                }
-            }) 
-    </script>        
+            el: '#root'
+        })
+    </script>
+
 </body>
 
 </html>

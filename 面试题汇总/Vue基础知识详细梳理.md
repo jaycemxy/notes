@@ -86,7 +86,7 @@ JS:
 </script>
 ```
 ## 条件渲染
-v-show 和 v-if 都能控制一个模版标签是否在页面上显示，区别在于 v-if 对应标签的变量名只要是false，它就不会存在在DOM之上，而 v-show 对应的标签变量名变为false，它仍然存在在标签上，只不过是以 display: none; 的形式存在
+v-show 和 v-if 都能控制一个模版标签是否在页面上显示，区别在于 v-if 对应标签的变量名只要是false，它就不会存在在DOM之上，而 v-show 对应的标签变量名变为false，它仍然存在在标签上，只不过是以 display: none; 的形式存在。通常，如果需要频繁切换元素显示或隐藏就用 v-show ，不然就用 v-if
 ```
 html:
 <div id="app">
@@ -195,7 +195,7 @@ JS:
 ```
 html:
 <div id="app">
-  <div :style="styleObj" @click="handleDivClick">  //style中还可以是数组的形式<div :style="[styleObj, {fontSize: '30px'}]"></div>
+  <div @click="handleDivClick" :style="styleObj">  //style中还可以是数组的形式<div :style="[styleObj, {fontSize: '30px'}]"></div>
      Hello style
   </div>
 </div>
@@ -370,6 +370,7 @@ JS:
 </script> 
 ```
 ## 非父子组件传值（中央事件总线：eventBus）
+需求是做一个点击事件，点击上面的元素，下面的元素切换成和上面一样，下面的元素点击切换成和上面的元素一样，即同级元素之间互相传值
 ```
 html:
 <div id="root">
@@ -382,18 +383,23 @@ JS:
   Vue.prototype.bus = new Vue()  //关键句
 
   Vue.component('child', {
-      data: function(){
-          return {
-              selfContent: this.content
-          }
-      },
       props: {
           content: String
       },
+      data: function(){
+          return {
+              selfContent: this.content  //这一句的目的在于克隆父组件的数据在子组件内使用，因为子组件不能修改父组件内的数据
+          }
+      },
       template: '<div @click="handleClick">{{ selfContent }}</div>',
-      methods: function(){
+      methods: {
+          handleClick: function(){
+              this.bus.$emit('change',this.selfContent)
+          }
+      },
+      mounted: function(){
           var this_ = this
-          this.bus.$on('change', function(msg){
+          this.bus.$on('change',function(msg){
               this_.selfContent = msg
           })
       }
