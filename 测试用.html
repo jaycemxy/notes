@@ -31,6 +31,18 @@
             这里是一些内容
         </div>
     </div>
+
+    <script>
+        function xxx(){
+            return new Promise(function(resolve,reject){
+                setTimeout( ()=> {
+                    resolve()
+                    reject()
+                }, 5000) 
+            })
+        }
+        xxx().then()
+    </script>
 </body>
 
 </html>

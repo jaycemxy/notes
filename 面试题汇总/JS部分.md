@@ -1,4 +1,4 @@
-1. 如何使用promise
+## 如何使用promise
 - then的链式用法
 ```
 $.ajax(...).then(successFn,errorFn).then(successFn2,errorFn2)
@@ -14,9 +14,14 @@ function xxx(){
   })
 }
 
-xxx.().then(value)
+xxx().then(value)
 console.log(value);
 ```
+当你使用new关键字，new命令会自动帮你执行以下步骤：
+1. 创建一个空的临时对象，作为将要返回的对象实例。  //var temp = {}
+2. 将这个空对象的原型，指向构造函数的prototype属性。  //this.__proto__ = 构造函数fn.prototype 
+3. 将这个空对象赋值给函数内部的this关键字。  //this = temp
+4. 开始执行构造函数内部的代码。  //return this
 - await的用法
 ```
 function xxx(){
@@ -51,7 +56,7 @@ try{
 }
 ```
 
-2. 原生JS写ajax请求
+## 原生JS写ajax请求
 ```
 let xhr = new XMLHttpRequest()
 xhr.open('GET', url)
@@ -66,7 +71,7 @@ xhr.onreadystatechange = function(){
 }
 xhr.send()
 ```
-3. 闭包是什么
+## 闭包是什么
 - 定义
 
 首先声明一个立即执行函数，这个函数里有一个变量和一个函数
@@ -89,13 +94,13 @@ console.log(n)  //n is not defined
 
 间接访问一个变量，也可以说是对外隐藏了一个变量
 
-4. 一段代码里的this是什么？（call一个函数时，给这个函数传入的第一个参数就是this）
+## 一段代码里的this是什么？（call一个函数时，给这个函数传入的第一个参数就是this）
 - fn()里面的this是window
-- fn()是strict mode时，this就是undefined
+- fn()是strict mode严格模式时，this就是undefined
 - a.b.c.fn()中this就是a.b.c即fn前面的东西
 - () => console.log(this)，里面的this就是外面的this，外面的this用前三条可以确定
 
-5. 立即执行函数
+## 立即执行函数
 - 定义
   声明一个匿名函数，并且马上调用这个匿名函数
 - 形式
@@ -115,7 +120,7 @@ console.log(n)  //n is not defined
 - 作用
   创建一个独立作用域，这个作用域内的变量外部访问不到，避免全局污染
 
-6. async/await语法是什么？目的是？
+## async/await语法是什么？目的是？
 ```
 function returnPromise(){
   return new Promise(function(resolve,reject){
@@ -134,7 +139,7 @@ return === '成功'
 ```
 作用：模拟同步代码，即用同步的形式来写异步的代码，这样就不用回调了
 
-7. 如何实现深拷贝
+## 如何实现深拷贝
 - JSON实现方式
 ```
 var a = {...}
@@ -162,7 +167,7 @@ function clone(object){
   return object2
 }
 ```
-8. 如何实现数组去重
+## 如何实现数组去重
 - 基数排序的逻辑（只能是正整数）
 ```
 var a = [4,2,5,6,3,4,5]
@@ -179,17 +184,17 @@ console.log(Object.keys(hashTab))  //['4','2','5','6','3'] 得到的是字符串
 ```
 - 用Set去重
 ```
-a = [1,3,4,1,3,3,2,1]
+var a = [1,3,4,1,3,3,2,1]
 Array.from(new Set(a))
 -> a = [1,3,4,2]
 ```
-9. 如何用正则实现string.trim()
+## 如何用正则实现string.trim()
 ```
 function trim(string){
   return string.trim.replace(/^\s+|\s+$/,'') 
 }
 ```
-10. JS原型是什么？
+## JS原型是什么？
 举例说，
 - var a = [1,2,3]
 - 变量a只有0，1，2，length这4个key
@@ -197,7 +202,7 @@ function trim(string){
 - 因为a.__proto__ === Array.prototype
 - push方法就是沿着a.__proto__找到的，也就是Array.prototype.push
 - Array.prototype还有很多方法，例如pop、join、slice、splice等
-11. ES6中的class了解吗？
+## ES6中的class了解吗？
 举例说明
 ```
 class Animal {
@@ -219,4 +224,4 @@ class Person extends Animal {
 
 var p1 = new Person('jayce')
 ```
-12. 如何实现继承？(使用ES6中 extends 关键字)
+## 如何实现继承？(使用ES6中 extends 关键字)
